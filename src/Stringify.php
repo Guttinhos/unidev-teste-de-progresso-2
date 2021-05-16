@@ -30,7 +30,22 @@ class Stringify
      * ]
      */
     public static function generate($stringJson)
+
     {
-        // Seu código aqui...
+        $jsonObj = json_decode($stringJson);
+        $currentDate = date_create("today");
+        $birthdate = date_create($jsonObj->birth);
+        foreach ($jsonObj->childrens as $key => $kid) {
+            $arr[] =  $kid->age;   
+        }
+
+        $container =   array("full_name" =>   $jsonObj->name . " " . $jsonObj->lastname,
+          "age" => intval(date_diff($currentDate, $birthdate)->format('%y')),
+          "childrens" => count($jsonObj->childrens),
+          "childrens_age" =>  $arr);
+
+        return $container;
+        
+       
     }
 }
